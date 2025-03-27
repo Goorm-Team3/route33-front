@@ -27,7 +27,8 @@ const SignUpPage = () => {
         const userInfo = {
           username : userName,
           loginId : userId,
-          password : userPw
+          password : userPw,
+          passwordConfirm : userPwConfirm
         };
         const response = await signup(userInfo);
         if(response && response.status ===200){
