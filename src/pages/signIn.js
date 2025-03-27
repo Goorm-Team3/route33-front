@@ -7,6 +7,7 @@ const SignUpPage = () => {
     const [userName, setUserName] = useState("");
     const [userId, setUserId] = useState("");
     const [userPw, setUserPw] = useState("");
+    const [userPwConfirm, setUserPwConfirm] = useState("");
 
     const handleUserNameChange = (event) =>{
       setUserName(event.target.value)
@@ -16,6 +17,9 @@ const SignUpPage = () => {
     }
     const handleUserPwChange = (event) =>{
       setUserPw(event.target.value)
+    }
+    const handleUserPwConfirm = (event)=>{
+      setUserPwConfirm(event.target.value)
     }
 
     const handleSignUp = async () => {
@@ -61,6 +65,13 @@ const SignUpPage = () => {
           style={styles.input}
           name='userPw'
           onChange={handleUserPwChange}
+        />
+        <input
+          type="password"
+          placeholder="비밀번호 확인"
+          style={styles.input}
+          name='userPwConfirm'
+          onChange={handleUserPwConfirm}
         />
         <button style={styles.button} onClick={handleSignUp}>회원가입</button>
       </div>
