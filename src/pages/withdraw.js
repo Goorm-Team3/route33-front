@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { withdrawal } from '../api/api';
+import { withdraw } from '../api/api';
 
 
 const WithdrawPage = () => {
@@ -10,13 +10,14 @@ const WithdrawPage = () => {
     const handelAmountChange = (event) =>{
       setAmount(event.target.value);
     }
-    const handleWithdrawal = async () => {
+
+    const handleWithdraw = async () => {
       try{
         const ammountInfo = {
-          amount : amount
+          amount : Number(amount)
         };
-        const response = await withdrawal(ammountInfo);
-        if(response && response.status ===200){
+        const response = await withdraw(ammountInfo);
+        if(response.status ===200){
           alert("출금되었습니다");
         }else{
           alert("잔액을 확인 해 주세요");
@@ -49,7 +50,7 @@ const WithdrawPage = () => {
       />
       <div style={styles.buttonBox}>
         <button style={styles.button} onClick={handelCancle}>취소</button>
-        <button style={styles.button} onClick={handleWithdrawal}>출금</button>
+        <button style={styles.button} onClick={handleWithdraw}>출금</button>
 
       </div>
     </div>

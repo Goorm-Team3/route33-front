@@ -31,8 +31,8 @@ const MainPage = () => {
           try {
               const response = await getuserAccountInfo(); // API 호출
               if (response && response.status === 200) {
-                  const data = response.data;
-                  setUserName(data.name);
+                  const data = response.data.data;
+                  setUserName(data.username);
                   setAccountNumber(data.accountNumber);
                   setBalance(data.balance);
               } else {
@@ -54,13 +54,13 @@ const MainPage = () => {
       <h1 style={styles.title}>삼심삼쩜삼 뱅킹</h1>
       <div style={styles.infoBox}>
         <div style={styles.infoItem}>
-          <strong>사용자 이름:</strong> {userName}
+          <strong>사용자 이름 :</strong> {userName}
         </div>
         <div style={styles.infoItem}>
-          <strong>계좌 번호:</strong> {accountNumber}
+          <strong>계좌 번호 :</strong> {accountNumber}
         </div>
         <div style={styles.infoItem}>
-          <strong>잔액:</strong> ￦{balance.toLocaleString()}
+          <strong>잔액 :</strong> ￦ {balance.toString()}
         </div>
       </div>
 

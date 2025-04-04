@@ -19,11 +19,11 @@ const DepositPage = () => {
           amount : Number(depositAmount)
         };
         const response = await deposit(depositInfo);
-        if(response && response ===200){
+        if(response.status ===200){
           alert("입금되었습니다.");
           navigate('/main');
         }else{
-          alert("입금에 실패했습니다.");
+          alert("실패했습니다.");
         }
       }catch (error){
         console.log(error);

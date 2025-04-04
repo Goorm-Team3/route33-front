@@ -23,15 +23,16 @@ const LoginPage = () => {
           password : userPw
         };
         const response = await authUser(userInfo);
-        if(response && response.status===200){
-          // const toekn = response.data.token;
-          const name = response.data.name;
-          // localStorage.setItem("token",token);
-          localStorage.setItem("userName",name);
+        if(response.status===200){
+          const accessToken = response.data.accessToken;
+          const refreshToken = response.data.refreshToken
+          localStorage.setItem("accessToken",accessToken);
+          localStorage.setItem("refreshToken",refreshToken);
+
           alert("로그인 되었습니다");
           navigate("/main");
         }else{
-          alert("Id/Pw를 다시 확인 해 주세요");
+          alert(response.message);
         }
 
       }catch(error){

@@ -10,7 +10,6 @@ const TransferPage = () => {
     const [amount, setAmount] = useState("");
 
     const handleAccountChange = (event)=>{
-      console.log(event.target.value);
       setAccount(event.target.value);
     }
 
@@ -32,8 +31,7 @@ const TransferPage = () => {
         }
         navigate('/main');
       }catch(error){
-        console.log(error);
-        alert("송금에 싫패했습니다.");
+        alert("송금에 실패했습니다.");
         navigate('/main');
       }
     };
