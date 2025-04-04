@@ -29,18 +29,21 @@ const MainPage = () => {
     useEffect(() => {
       const fetchAccountInfo = async () => {
           try {
-              const response = await getuserAccountInfo(); // API 호출
+              const response = await getuserAccountInfo();
               if (response && response.status === 200) {
                   const data = response.data.data;
                   setUserName(data.username);
                   setAccountNumber(data.accountNumber);
                   setBalance(data.balance);
-              } else {
-                  alert("계좌 정보를 불러오지 못했습니다.");
-              }
+              } 
           } catch (error) {
-              console.error("계좌 정보 요청 실패:", error);
-              alert("서버 오류가 발생했습니다.");
+            if(error.response.status === 400 && error.response.data.message){
+              alert(error.response.data.message);
+              // 400 : 존재하지 않는 회원 입니다.
+            }else{
+              alert("서버 오류가 발생했습니다.")
+              console.log("계좌 정보 요청 실패: \n", error);
+            }
           }
       };
 

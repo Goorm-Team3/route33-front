@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import LoginPage from './pages/login';
-import SignUpPage from './pages/signIn';
+import SignUpPage from './pages/signUp';
 import MainPage from './pages/main';
 import DepositPage from './pages/deposit';
 import WithdrawPage from './pages/withdraw';

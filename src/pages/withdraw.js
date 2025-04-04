@@ -18,14 +18,18 @@ const WithdrawPage = () => {
         };
         const response = await withdraw(ammountInfo);
         if(response.status ===200){
-          alert("출금되었습니다");
-        }else{
-          alert("잔액을 확인 해 주세요");
+          alert(response.data.message); // 출금 성공
+          navigate('/main');
         }
-        navigate('/main');
       }catch(error){
-        console.log(error);
-        alert("출금에 실패했습니다.");
+        if(error.response.status === 400 && error.response.data.message){
+          alert(error.response.data.message);
+          // 400 : 출금을 위한 잔액이 부족합니다, 현재 잔액:
+          // 400 : 회원 번호 userId에 대한 계좌를 찾을 수 없습니다.
+        }else{
+          alert("서버 오류가 발생했습니다.")
+          console.log("출금 요청 실패: \n", error);
+        }
       }
     };
 

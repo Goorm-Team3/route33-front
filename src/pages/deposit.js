@@ -20,14 +20,12 @@ const DepositPage = () => {
         };
         const response = await deposit(depositInfo);
         if(response.status ===200){
-          alert("입금되었습니다.");
+          alert(response.data.message); // 입금 성공
           navigate('/main');
-        }else{
-          alert("실패했습니다.");
         }
       }catch (error){
-        console.log(error);
-        alert("문제가 발생했습니다.");
+        alert("서버 오류가 발생했습니다.")
+        console.log("입금 요청 실패: \n", error);
       }
     };
 

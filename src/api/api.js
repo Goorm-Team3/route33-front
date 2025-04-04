@@ -11,8 +11,6 @@ export const signup = async(userInfo)=>{
     }catch(error){
         if(error.response.status === 400){
             alert(error.response.data.message);
-        }else{
-            // console.log(error);
         }
     }
 }
@@ -20,20 +18,20 @@ export const signup = async(userInfo)=>{
 
 
 // 사용자 인증 : login
-
 export const authUser = async (userInfo) => {
     try {
       const response = await axios.post(`${SERVER}/user/login`, userInfo);
-      console.log(response.data);
       if (response.status === 200) {
+        alert("로그인에 성공했습니다.");
         return response;
       }
     } catch (error) {
-      console.log(error);
       throw error;
     }
   };
 
+
+  // main 
   export const getuserAccountInfo = async ()=>{
     const token = localStorage.getItem("accessToken");
     const config = {
@@ -48,7 +46,6 @@ export const authUser = async (userInfo) => {
         }
 
     }catch (error){
-        console.log(error);
         throw error;
     }
 
@@ -74,6 +71,7 @@ export const authUser = async (userInfo) => {
     }
   };
 
+
 //예금
   export const deposit = async(accountInfo)=>{
     try{
@@ -84,15 +82,11 @@ export const authUser = async (userInfo) => {
           },
         };
         const response = await axios.post(`${SERVER}/account/deposit`,accountInfo,config);
-        if(response.status === 200 | response.status===201){
+        if(response.status === 200){
           return response;
         }
     }catch(error){
-        if(error.response && error.response.status ===409){
-          console.log(error);
-        }else{
-            console.log(error);
-        }
+        throw error;
     }
 }
 
@@ -106,15 +100,11 @@ export const withdraw = async(accountInfo)=>{
           },
         };
         const response = await axios.post(`${SERVER}/account/withdraw`,accountInfo,config);
-        if(response.status === 200 | response.status===201){
+        if(response.status === 200 ){
           return response;
         }
     }catch(error){
-        if(error.response && error.response.status ===409){
-            // alert("출금에 실패했습니다.");
-        }else{
-            console.log(error);
-        }
+        throw error;
     }
 }
 
@@ -128,14 +118,10 @@ export const transfer = async(accountInfo)=>{
           },
         };
         const response = await axios.post(`${SERVER}/account/transfer`,accountInfo,config);
-        if(response.status === 200 | response.status===201){
+        if(response.status === 200 ){
           return response;
         }
     }catch(error){
-        if(error.response && error.response.status ===409){
-            alert("송금에 실패했습니다.");
-        }else{
-            console.log(error);
-        }
+        throw error;
     }
 }
