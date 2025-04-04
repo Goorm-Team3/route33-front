@@ -9,10 +9,10 @@ export const signup = async(userInfo)=>{
             return response;
         }
     }catch(error){
-        if(error.response.status ===409){
-            alert("이미 존재하는 아이디 입니다.");
+        if(error.response.status === 400){
+            alert(error.response.data.message);
         }else{
-            console.log(error);
+            // console.log(error);
         }
     }
 }
