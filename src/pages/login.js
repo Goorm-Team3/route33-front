@@ -29,15 +29,18 @@ const LoginPage = () => {
           localStorage.setItem("accessToken",accessToken);
           localStorage.setItem("refreshToken",refreshToken);
 
-          alert("로그인 되었습니다");
           navigate("/main");
         }else{
           alert(response.message);
         }
 
       }catch(error){
-        console.log(error);
-        alert("로그인에 실패했습니다.");
+        if(error.response.status === 400 || error.response.status === 401){
+          alert(error.response.data.message);
+          // 400 : 존재하지 않는 아이디 입니다. 401 : 비밀번호가 일치하지 않습니다.
+        }else{
+          alert("서버 오류가 발생했습니다.")
+        }
       }
     };
     const handleSignup = () => {
