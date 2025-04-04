@@ -35,9 +35,10 @@ const LoginPage = () => {
         }
 
       }catch(error){
-        if(error.response.status === 400 || error.response.status === 401){
+        if(error.response.status === 400){
           alert(error.response.data.message);
-          // 400 : 존재하지 않는 아이디 입니다. 401 : 비밀번호가 일치하지 않습니다.
+          // 400 : 존재하지 않는 아이디 입니다. 
+          // 400 : 비밀번호가 일치하지 않습니다.
         }else{
           alert("서버 오류가 발생했습니다.")
           console.log(error);

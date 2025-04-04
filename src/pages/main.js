@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getuserAccountInfo } from '../api/api';
+import { logout } from '../api/api';
 
 
 const MainPage = () => {
@@ -10,19 +11,38 @@ const MainPage = () => {
     const [balance, setBalance] = useState(0);
 
     const handleDeposit = () => {
-        navigate('/deposit');
+        navigate('/deposit',{
+          state :{account : accountNumber}
+        });
     };
 
     const handleWithdraw = () => {
-        navigate('/withdraw');
+        navigate('/withdraw',{
+          state :{account : accountNumber}
+        });
     };
 
     const handleTransfer = () => {
-        navigate('/transfer');
+        navigate('/transfer',{
+          state :{account : accountNumber}
+        });
     };
 
-    const handleLogout = () => {
-        navigate('/');
+    const handleLogout = async() => {
+      try{
+        
+        const response = await logout();
+        if(response.status === 200){
+          alert(response.data.logout);
+          localStorage.clear();
+          navigate('/');
+        }
+        
+      }catch(error){
+        alert(error.response.data.message);
+
+      }
+        await logout();
     };
 
 
@@ -32,6 +52,7 @@ const MainPage = () => {
               const response = await getuserAccountInfo();
               if (response && response.status === 200) {
                   const data = response.data.data;
+                  console.log(data);
                   setUserName(data.username);
                   setAccountNumber(data.accountNumber);
                   setBalance(data.balance);
@@ -63,7 +84,7 @@ const MainPage = () => {
           <strong>계좌 번호 :</strong> {accountNumber}
         </div>
         <div style={styles.infoItem}>
-          <strong>잔액 :</strong> ￦ {balance.toString()}
+          <strong>잔액 :</strong> ￦ {balance}
         </div>
       </div>
 

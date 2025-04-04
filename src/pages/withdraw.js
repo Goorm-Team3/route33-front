@@ -1,11 +1,15 @@
 import React,{useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { withdraw } from '../api/api';
+import { useLocation } from "react-router-dom";
 
 
 const WithdrawPage = () => {
     const navigate = useNavigate();
     const [amount, setAmount] = useState("");
+    const location = useLocation();
+    const { account } = location.state || {};
+
 
     const handelAmountChange = (event) =>{
       setAmount(event.target.value);
@@ -41,7 +45,7 @@ const WithdrawPage = () => {
       <h1 style={styles.title}>출금하기</h1>
 
       <div style={styles.infoBox}>
-        <strong>계좌 번호:</strong> 110-1234-5678
+        <strong>계좌 번호:</strong> {account}
       </div>
 
       <input

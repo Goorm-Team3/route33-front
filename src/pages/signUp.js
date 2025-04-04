@@ -36,8 +36,13 @@ const SignUpPage = () => {
           navigate('/');
         }
       }catch(error){
-        alert("회원가입에 실패했습니다.")
-        console.log(error);
+        if(error.response.status === 400 && error.response.data.message){
+          alert(error.response.data.message);
+          // 400 : 송금을 위한 잔액이 부족합니다, 현재 잔액:
+        }else{
+          alert("회원가입에 실패했습니다.")
+          console.log("회원가입 실패: \n", error);
+        }
       }
     };
   return (

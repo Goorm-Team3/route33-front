@@ -1,11 +1,16 @@
 import React,{useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { deposit } from '../api/api';
+import { useLocation } from "react-router-dom";
+
 
 const DepositPage = () => {
 
     const navigate = useNavigate();
-    const [depositAmount, setDepositAmount] = useState("");
+    const [depositAmount, setDepositAmount] = useState(0);
+    const location = useLocation();
+    const { account } = location.state || {};
+
 
     const handelAmountChange = (event) =>{
       setDepositAmount(event.target.value);
@@ -16,7 +21,7 @@ const DepositPage = () => {
     const handleDeposit = async() => {
       try{
         const depositInfo={
-          amount : Number(depositAmount)
+          amount : depositAmount
         };
         const response = await deposit(depositInfo);
         if(response.status ===200){
@@ -36,7 +41,7 @@ const DepositPage = () => {
       <h1 style={styles.title}>입금하기</h1>
 
       <div style={styles.infoBox}>
-        <strong>계좌 번호:</strong> 110-1234-5678
+        <strong>계좌 번호:</strong> {account}
       </div>
 
       <input

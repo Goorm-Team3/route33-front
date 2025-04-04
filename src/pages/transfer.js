@@ -1,6 +1,7 @@
 import React,{useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { transfer } from '../api/api';
+import { useLocation } from "react-router-dom";
 
 
 const TransferPage = () => {
@@ -8,6 +9,9 @@ const TransferPage = () => {
     const navigate = useNavigate();
     const [targetAccount, setAccount] = useState("");
     const [amount, setAmount] = useState("");
+    const location = useLocation();
+    const { account } = location.state || {};
+
 
     const handleAccountChange = (event)=>{
       setAccount(event.target.value);
@@ -50,7 +54,7 @@ const TransferPage = () => {
       <h1 style={styles.title}>송금하기</h1>
 
       <div style={styles.infoBox}>
-        <strong>내 계좌 번호:</strong> 110-1234-5678
+        <strong>내 계좌 번호:</strong> {account}
       </div>
 
       <input

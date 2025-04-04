@@ -1,6 +1,6 @@
 import axios from "axios";
 import SERVER from "./url";
-
+import axiosInstance from "./axiosInstance";
 
 export const signup = async(userInfo)=>{
     try{
@@ -9,9 +9,7 @@ export const signup = async(userInfo)=>{
             return response;
         }
     }catch(error){
-        if(error.response.status === 400){
-            alert(error.response.data.message);
-        }
+        throw error;
     }
 }
 
@@ -40,7 +38,7 @@ export const authUser = async (userInfo) => {
         },
       };
     try{
-        const response = await axios.get(`${SERVER}/account`,config);
+        const response = await axiosInstance.get(`/account`,config);
         if(response.status === 200){
             return response;
         }
@@ -55,19 +53,15 @@ export const authUser = async (userInfo) => {
   // logout -> 추후 수정 필요
   export const logout = async () => {
     try {
-      const token = localStorage.getItem("accessToken");
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`, // 인증 토큰을 헤더에 추가
-        },
+      const tokenInfo ={
+        refreshToken : localStorage.getItem("refreshToken")
       };
-      const response = await axios.get(`${SERVER}/user/logout/`, config);
+      const response = await axios.post(`${SERVER}/user/logout`,tokenInfo);
       if (response.status === 200) {
-        alert("정상적으로 로그 아웃되었습니다.");
-        return response.data;
+        return response;
       }
-    } catch (err) {
-      throw new Error("fetch department error");
+    } catch (error) {
+      throw error;
     }
   };
 
@@ -81,12 +75,15 @@ export const authUser = async (userInfo) => {
             Authorization: `Bearer ${token}`, 
           },
         };
-        const response = await axios.post(`${SERVER}/account/deposit`,accountInfo,config);
+        const response = await axiosInstance.post(`/account/deposit`,accountInfo,config);
         if(response.status === 200){
           return response;
         }
     }catch(error){
-        throw error;
+      // if(error.response.status === 401){
+      //   await refreshToken();
+      // }
+      throw error;
     }
 }
 
@@ -99,12 +96,15 @@ export const withdraw = async(accountInfo)=>{
             Authorization: `Bearer ${token}`, 
           },
         };
-        const response = await axios.post(`${SERVER}/account/withdraw`,accountInfo,config);
+        const response = await axiosInstance.post(`/account/withdraw`,accountInfo,config);
         if(response.status === 200 ){
           return response;
         }
     }catch(error){
-        throw error;
+      // if(error.response.status === 401){
+      //   await refreshToken();
+      // }
+      throw error;
     }
 }
 
@@ -117,11 +117,34 @@ export const transfer = async(accountInfo)=>{
             Authorization: `Bearer ${token}`, 
           },
         };
-        const response = await axios.post(`${SERVER}/account/transfer`,accountInfo,config);
+        const response = await axiosInstance.post(`/account/transfer`,accountInfo,config);
         if(response.status === 200 ){
           return response;
         }
     }catch(error){
-        throw error;
+      // if(error.response.status === 401){
+      //   await refreshToken();
+      // }
+      throw error;
     }
 }
+
+
+// export const refreshToken = async(accountInfo)=>{
+//   try{
+//       const token = localStorage.getItem("refreshToken");
+//       const refreshInfo = {
+//         "refreshToken" : token
+//       };
+//       const response = await axios.post(`${SERVER}/user/token/refresh`,refreshInfo);
+//       if(response.status === 200 ){
+//         const data = response.data;
+//         const accessToken = data.accessToken;
+//         const refreshToken = data.refreshToken
+//         localStorage.setItem("accessToken",accessToken);
+//         localStorage.setItem("refreshToken",refreshToken);
+//       }
+//   }catch(error){
+//       throw error;
+//   }
+// }
