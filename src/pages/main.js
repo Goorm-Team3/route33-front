@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getuserAccountInfo } from '../api/api';
 import { logout } from '../api/api';
+import { checkToken } from '../api/api';
 
 
 const MainPage = () => {
@@ -47,6 +48,14 @@ const MainPage = () => {
 
 
     useEffect(() => {
+      const token = localStorage.getItem("accessToken");
+    
+      if(token==null){
+        alert("로그인이 필요한 페이지 입니다.");
+        navigate("/");
+        return;
+      }
+      
       const fetchAccountInfo = async () => {
           try {
               const response = await getuserAccountInfo();
@@ -67,9 +76,10 @@ const MainPage = () => {
             }
           }
       };
+      
 
       fetchAccountInfo();
-  }, []);
+    }, [navigate]);
 
 
 

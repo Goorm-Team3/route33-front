@@ -48,6 +48,15 @@ const TransferPage = () => {
         navigate('/main');
     };
 
+    useEffect(() => {
+      const token = localStorage.getItem("accessToken");
+    
+      if(token==null){
+        alert("로그인이 필요한 페이지 입니다.");
+        navigate("/");
+        return;
+      }
+    }, [navigate]);
 
   return (
     <div style={styles.container}>

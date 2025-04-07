@@ -10,6 +10,15 @@ const WithdrawPage = () => {
     const location = useLocation();
     const { account } = location.state || {};
 
+    useEffect(() => {
+      const token = localStorage.getItem("accessToken");
+    
+      if(token==null){
+        alert("로그인이 필요한 페이지 입니다.");
+        navigate("/");
+        return;
+      }
+    }, [navigate]);
 
     const handelAmountChange = (event) =>{
       setAmount(event.target.value);
@@ -64,6 +73,7 @@ const WithdrawPage = () => {
     </div>
   );
 };
+
 
 const styles = {
   container: {

@@ -12,6 +12,16 @@ const DepositPage = () => {
     const { account } = location.state || {};
 
 
+    useEffect(() => {
+      const token = localStorage.getItem("accessToken");
+    
+      if(token==null){
+        alert("로그인이 필요한 페이지 입니다.");
+        navigate("/");
+        return;
+      }
+    }, [navigate]);
+
     const handelAmountChange = (event) =>{
       setDepositAmount(event.target.value);
     }
