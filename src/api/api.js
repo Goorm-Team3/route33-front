@@ -80,9 +80,6 @@ export const authUser = async (userInfo) => {
           return response;
         }
     }catch(error){
-      // if(error.response.status === 401){
-      //   await refreshToken();
-      // }
       throw error;
     }
 }

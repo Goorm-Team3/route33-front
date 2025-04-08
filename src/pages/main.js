@@ -48,16 +48,12 @@ const MainPage = () => {
 
 
     useEffect(() => {
-      const token = localStorage.getItem("accessToken");
-    
-      if(token==null){
-        alert("로그인이 필요한 페이지 입니다.");
-        navigate("/");
-        return;
-      }
+      
       
       const fetchAccountInfo = async () => {
           try {
+              const token = localStorage.getItem("accessToken");
+    
               const response = await getuserAccountInfo();
               if (response && response.status === 200) {
                   const data = response.data.data;
@@ -70,8 +66,11 @@ const MainPage = () => {
             if(error.response.status === 400 && error.response.data.message){
               alert(error.response.data.message);
               // 400 : 존재하지 않는 회원 입니다.
+            }else if(error.response.status === 401){
+              alert("접근할 수 없는 페이지 입니다.")
+              navigate("/")
             }else{
-              alert("서버 오류가 발생했습니다.")
+              alert(error.response.data.message)
               console.log("계좌 정보 요청 실패: \n", error);
             }
           }

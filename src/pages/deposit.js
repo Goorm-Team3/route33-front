@@ -39,8 +39,13 @@ const DepositPage = () => {
           navigate('/main');
         }
       }catch (error){
+        if(error.response.status === 401){
+          alert("접근할 수 없는 페이지 입니다.")
+          navigate("/")
+        }else{
         alert("서버 오류가 발생했습니다.")
         console.log("입금 요청 실패: \n", error);
+        }
       }
     };
 
