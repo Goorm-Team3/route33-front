@@ -25,7 +25,7 @@ const TransferPage = () => {
       try{
         const transferInfo ={
           amount : amount,
-          accountnumber: targetAccount
+          accountNumber: targetAccount
         };
         const response = await transfer(transferInfo);
         if(response.status ===200){
