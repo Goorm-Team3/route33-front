@@ -84,7 +84,7 @@ const MainPage = () => {
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}>삼심삼쩜삼 뱅킹</h1>
+      <h1 style={styles.title}>ROUTE33 뱅킹</h1>
       <div style={styles.infoBox}>
         <div style={styles.infoItem}>
           <strong>사용자 이름 :</strong> {userName}

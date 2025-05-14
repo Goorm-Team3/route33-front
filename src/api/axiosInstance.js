@@ -1,8 +1,8 @@
 import axios from "axios";
-import SERVER from "./url";
+import APIGW from "./url";
 
 const axiosInstance = axios.create({
-  baseURL: SERVER,
+  baseURL: APIGW,
 });
 
 // 요청 인터셉터: accessToken 자동 첨부
@@ -30,7 +30,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const refreshToken = localStorage.getItem("refreshToken");
-        const res = await axios.post(`${SERVER}/user/token/refresh`, {
+        const res = await axios.post(`${APIGW}/user/token/refresh`, {
           refreshToken,
         });
 

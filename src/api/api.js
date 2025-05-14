@@ -1,10 +1,10 @@
 import axios from "axios";
-import SERVER from "./url";
+import APIGW from "./url";
 import axiosInstance from "./axiosInstance";
 
 export const signup = async(userInfo)=>{
     try{
-        const response = await axios.post(`${SERVER}/user/register`,userInfo);
+        const response = await axios.post(`${APIGW}/user/register`,userInfo);
         if(response.status === 200 || response.status===201){
             return response;
         }
@@ -18,12 +18,13 @@ export const signup = async(userInfo)=>{
 // 사용자 인증 : login
 export const authUser = async (userInfo) => {
     try {
-      const response = await axios.post(`${SERVER}/user/login`, userInfo);
+      const response = await axios.post(`${APIGW}/user/login`, userInfo);
       if (response.status === 200) {
         alert("로그인에 성공했습니다.");
         return response;
       }
     } catch (error) {
+      alert(error)
       throw error;
     }
   };
@@ -31,10 +32,10 @@ export const authUser = async (userInfo) => {
 
   // main 
   export const getuserAccountInfo = async ()=>{
-    const token = localStorage.getItem("accessToken");
+    const accessToken = localStorage.getItem("accessToken");
     const config = {
         headers: {
-          Authorization: `Bearer ${token}`, // 인증 토큰을 헤더에 추가
+          Authorization: `Bearer ${accessToken}`, // 인증 토큰을 헤더에 추가
         },
       };
     try{
@@ -56,7 +57,7 @@ export const authUser = async (userInfo) => {
       const tokenInfo ={
         refreshToken : localStorage.getItem("refreshToken")
       };
-      const response = await axios.post(`${SERVER}/user/logout`,tokenInfo);
+      const response = await axiosInstance.post(`/user/logout`,tokenInfo);
       if (response.status === 200) {
         return response;
       }
